@@ -15,5 +15,14 @@
   "bugs": {
     "url": "https://github.com/GreywallSoftware/NewHireWhiteboard/issues"
   },
-  "homepage": "https://github.com/GreywallSoftware/NewHireWhiteboard#readme"
+  "homepage": "https://github.com/GreywallSoftware/NewHireWhiteboard#readme",
+  "devDependencies": {
+    "backbone": "^1.3.3",
+    "css-loader": "^0.28.0",
+    "firebase": "^3.8.0",
+    "jquery": "^3.2.1",
+    "style-loader": "^0.16.1",
+    "underscore": "^1.8.3",
+    "webpack": "^2.4.1"
+  }
 }
