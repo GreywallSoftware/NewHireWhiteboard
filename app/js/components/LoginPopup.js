@@ -38,12 +38,12 @@ export default Backbone.View.extend({
 
     login (provider) {
         firebase.auth().signInWithPopup(provider).then(function(result) {
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            var token = result.credential.accessToken;
-            // The signed-in user info.
-            var user = result.user;
-            // ...
-            debugger;
+            let user = result.user;
+
+            firebase.database().ref(`profiles/${user.uid}`).set({
+                name: user.displayName,
+                photoURL: user.photoURL
+            });
         }).catch(function(error) {
             // Handle Errors here.
             var errorCode = error.code;

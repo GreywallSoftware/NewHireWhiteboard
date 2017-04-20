@@ -10,12 +10,6 @@ export default Backbone.View.extend({
         this.roomsRef.on('child_added', this.handleRoomAdded.bind(this));
         this.roomsRef.on('child_changed', this.handleRoomChanged.bind(this));
         this.roomsRef.on('child_removed', this.handleRoomRemoved.bind(this));
-
-        this.render();
-    },
-
-    render () {
-        return this;
     },
 
     handleRoomAdded (data) {
@@ -34,14 +28,21 @@ export default Backbone.View.extend({
     },
 
     events: {
-        "click .create": "handleCreateRoomClick"
+        "click .create": "handleCreateRoomClick",
+        "click .item": "handleItemClick"
     },
 
-    handleCreateRoomClick (event) {
-        console.log('handleCreateRoomClick');
+    handleCreateRoomClick () {
         let newRoomRef = this.roomsRef.push();
         newRoomRef.set({
             name: "Room " + new Date().getTime()
         });
+    },
+
+    handleItemClick (event) {
+        let key = event.currentTarget.getAttribute('data-key');
+        this.$('.item.selected').removeClass('selected');
+        this.$(event.currentTarget).addClass('selected');
+        this.model.set('selectedRoom', key);
     }
 })
