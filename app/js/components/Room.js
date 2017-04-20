@@ -80,28 +80,27 @@ export default Backbone.View.extend({
      * @param data - firebase data snapshot
      */
     handleMessageAdded: function (data) {
-        let $newMessage = $(`<div class='message' data-key="${data.key}"></div>`)
-            .text(data.val().text);
+        let $newMessage = $(`<div class='message' data-key="${data.key}"></div>`);
 
-        // TODO: make the messages look prettier
-        // 1) the data returned should look like this
-        //   - { text: "some text", user: { displayName: "display name", photURL: "a url"}, lastModified: "timestamp" }
-        //   - we could render more info and include a photo
-
-        // user name
-        var $userName = $("<div class='user'></div>").text(data.val().user.displayName);
-
-        $newMessage.prepend($userName);
+        let $leftSide = $("<div class='message-left'></div>");
+        let $rightSide = $("<div class='message-right'></div>");
 
         // user photo
         var $userPhoto = $("<img class='photo' src='" + data.val().user.photoURL + "'/>");
-        $userName.after($userPhoto);
+        $leftSide.append($userPhoto);
 
+        // user name
+        var $userName = $("<div class='user'></div>").text(data.val().user.displayName);
+        var $text = $("<div class='text'></div>").text(data.val().text);
         // timestamp
-        var $timestamp = $("<div class='time'></div>").text(new Date(data.val().lastModified));
+        var $timestamp = $("<div class='timestamp'></div>").text(new Date(data.val().lastModified));
 
-        $newMessage.append($timestamp);
+       $rightSide.append($userName);
+       $rightSide.append($text);
+       $rightSide.append($timestamp);
 
+       $newMessage.append($leftSide);
+       $newMessage.append($rightSide);
 
         this.$('.stream').append($newMessage);
     },
