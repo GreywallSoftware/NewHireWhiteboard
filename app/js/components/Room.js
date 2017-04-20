@@ -1,6 +1,9 @@
 import Backbone from "backbone";
 import $ from "jquery";
 
+// TODO: possibly add more functionality to messages like:
+// - edit
+// - delete
 export default Backbone.View.extend({
 
     initialize() {
@@ -74,6 +77,12 @@ export default Backbone.View.extend({
     handleMessageAdded (data) {
         let $newMessage = $(`<div class='message' data-key="${data.key}"></div>`)
             .text(data.val().text);
+
+        // TODO: make the messages look prettier
+        // 1) the data returned should look like this
+        //   - { text: "some text", user: { displayName: "display name", photURL: "a url"}, lastModified: "timestamp" }
+        //   - we could render more info and include a photo
+
         this.$('.stream').append($newMessage);
     },
 
