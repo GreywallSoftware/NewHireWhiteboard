@@ -79,7 +79,7 @@ export default Backbone.View.extend({
      * creates a jquery element and appends to the the message stream for data provided
      * @param data - firebase data snapshot
      */
-    handleMessageAdded (data) {
+    handleMessageAdded: function (data) {
         let $newMessage = $(`<div class='message' data-key="${data.key}"></div>`)
             .text(data.val().text);
 
@@ -87,6 +87,13 @@ export default Backbone.View.extend({
         // 1) the data returned should look like this
         //   - { text: "some text", user: { displayName: "display name", photURL: "a url"}, lastModified: "timestamp" }
         //   - we could render more info and include a photo
+
+        // user name
+        var $userName = $("<div class='user'></div").text(data.val().user.displayName);
+        $newMessage.prepend($userName);
+
+        // user photo
+        //var $userPhoto = $("<div class='photo'></div>").append(data.val().photoURL);
 
         this.$('.stream').append($newMessage);
     },
