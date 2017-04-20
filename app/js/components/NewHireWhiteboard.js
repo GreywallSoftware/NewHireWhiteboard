@@ -6,6 +6,9 @@ import LoginPopup from './LoginPopup';
 import RoomList from './RoomList';
 import Room from './Room';
 
+// TODO: show the currently logged in user somewhere
+// TODO: add logout functionality
+
 export default Backbone.View.extend({
     initialize () {
         // create a new basic empty model which controls the "state"
