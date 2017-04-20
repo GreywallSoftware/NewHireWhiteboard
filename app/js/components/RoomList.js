@@ -4,14 +4,25 @@ import $ from 'jquery';
 export default Backbone.View.extend({
 
     initialize() {
+        firebase.auth().onAuthStateChanged(this.onAuthStateChanged.bind(this));
+    },
 
-        // setup a firebase ref to all rooms
-        this.roomsRef = firebase.database().ref('rooms');
+    onAuthStateChanged (user) {
+        if (user) {
+            if (this.roomsRef) {
+                this.roomsRef.off();
+            }
 
-        // setup listeners on the list of rooms
-        this.roomsRef.on('child_added', this.handleRoomAdded.bind(this));
-        this.roomsRef.on('child_changed', this.handleRoomChanged.bind(this));
-        this.roomsRef.on('child_removed', this.handleRoomRemoved.bind(this));
+            this.$(".list").empty();
+
+            // setup a firebase ref to all rooms
+            this.roomsRef = firebase.database().ref('rooms');
+
+            // setup listeners on the list of rooms
+            this.roomsRef.on('child_added', this.handleRoomAdded.bind(this));
+            this.roomsRef.on('child_changed', this.handleRoomChanged.bind(this));
+            this.roomsRef.on('child_removed', this.handleRoomRemoved.bind(this));
+        }
     },
 
     /**
