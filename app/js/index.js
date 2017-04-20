@@ -16,6 +16,7 @@ function initializeApp() {
 
     window.firebase = firebase.initializeApp(config); // initialize firebase
 
+    // start the application on the element
     new NewHireWhiteboard({
         el: $(".new-hire-whiteboard")
     });

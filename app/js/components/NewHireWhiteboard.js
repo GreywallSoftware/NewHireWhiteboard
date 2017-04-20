@@ -8,28 +8,27 @@ import Room from './Room';
 
 export default Backbone.View.extend({
     initialize () {
+        // create a new basic empty model which controls the "state"
+        // of the application. It's currently only being used for
+        // maintaining which rooms is currently selected
         this.model = new Backbone.Model();
 
-        this.render();
-    },
-
-    render() {
-
+        // create a new view to manage the login popup functionality
         this.loginPopup = new LoginPopup({
             el: ".login-popup"
         });
 
+        // create a new view to manage the room list functionality
         this.roomList = new RoomList({
             el: ".rooms",
             model: this.model
         });
 
+        // create a new view to manage the room functionality
         this.room = new Room({
             el: ".room",
             model: this.model
         });
-
-        return this;
     }
 });
 
