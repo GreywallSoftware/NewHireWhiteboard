@@ -60,6 +60,7 @@
     width: calc(100% - 200px);
     display: flex;
     flex-flow: row nowrap;
+    position: relative;
 }
 
 .room .messages {
@@ -80,6 +81,21 @@
 
 .room .messages .stream {
     height: calc(100% - 100px - 44px);
+}
+
+.room .select-room-notice {
+    display: none;
+    background-color: white;
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.room:not(.with-room) .select-room-notice {
+    display: flex;
 }
 
 .login-popup {
