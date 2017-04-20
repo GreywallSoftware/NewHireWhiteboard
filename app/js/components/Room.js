@@ -98,7 +98,7 @@ export default Backbone.View.extend({
         $userName.after($userPhoto);
 
         // timestamp
-        var $timestamp = $("<div class='time'></div>").text(data.val().lastModified);
+        var $timestamp = $("<div class='time'></div>").text(new Date(data.val().lastModified));
 
         $newMessage.append($timestamp);
 
