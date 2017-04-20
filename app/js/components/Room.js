@@ -97,6 +97,11 @@ export default Backbone.View.extend({
         var $userPhoto = $("<img class='photo' src='" + data.val().user.photoURL + "'/>");
         $userName.after($userPhoto);
 
+        // timestamp
+        var $timestamp = $("<div class='time'></div>").text(data.val().lastModified);
+
+        $newMessage.append($timestamp);
+
 
         this.$('.stream').append($newMessage);
     },
