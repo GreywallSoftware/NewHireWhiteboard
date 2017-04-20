@@ -4,6 +4,7 @@ import firebase from "firebase";
 let provider = new firebase.auth.GoogleAuthProvider();
 
 export default Backbone.View.extend({
+
     initialize() {
 
         firebase.auth().onAuthStateChanged(this.onAuthStateChanged.bind(this));

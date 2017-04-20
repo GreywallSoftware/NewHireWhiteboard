@@ -1,10 +1,9 @@
 import Backbone from 'backbone';
-import firebase from 'firebase';
-import $ from 'jquery';
 
-import '../../../css/index.css';
+import '../../css/index.css';
 
-import LoginPopup from '../login/LoginPopup';
+import LoginPopup from './LoginPopup';
+import RoomList from './RoomList';
 
 export default Backbone.View.extend({
     initialize () {
@@ -15,6 +14,10 @@ export default Backbone.View.extend({
 
         this.loginPopup = new LoginPopup({
             el: ".login-popup"
+        });
+
+        this.roomList = new RoomList({
+            el: ".rooms"
         });
 
         return this;
