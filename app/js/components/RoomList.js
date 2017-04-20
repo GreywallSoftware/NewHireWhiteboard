@@ -4,15 +4,23 @@ import $ from 'jquery';
 export default Backbone.View.extend({
 
     initialize() {
+        // bind a listener to firebase auth state changed event
         firebase.auth().onAuthStateChanged(this.onAuthStateChanged.bind(this));
     },
 
+    /**
+     * Populates the rooms list when a user is logged in
+     * @param user - firebase user
+     */
     onAuthStateChanged (user) {
+        // if there's a user then we can setup the listeners
         if (user) {
+            // if there's already a ref (shouldn't be), then clear all listeners
             if (this.roomsRef) {
                 this.roomsRef.off();
             }
 
+            // empty the rooms list
             this.$(".list").empty();
 
             // setup a firebase ref to all rooms
