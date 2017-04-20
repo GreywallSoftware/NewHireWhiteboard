@@ -89,11 +89,14 @@ export default Backbone.View.extend({
         //   - we could render more info and include a photo
 
         // user name
-        var $userName = $("<div class='user'></div").text(data.val().user.displayName);
+        var $userName = $("<div class='user'></div>").text(data.val().user.displayName);
+
         $newMessage.prepend($userName);
 
         // user photo
-        //var $userPhoto = $("<div class='photo'></div>").append(data.val().photoURL);
+        var $userPhoto = $("<img class='photo' src='" + data.val().user.photoURL + "'/>");
+        $userName.after($userPhoto);
+
 
         this.$('.stream').append($newMessage);
     },
