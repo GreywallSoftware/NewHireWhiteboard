@@ -4,6 +4,11 @@ import $ from "jquery";
 // TODO: possibly add more functionality to messages like:
 // - edit
 // - delete
+
+// TODO: possibly turn the textarea input into a RTE?
+
+// TODO: add extra functionality via the input cool functions like
+// - today's weather if a user types /weather (could interface with the open weather api)
 export default Backbone.View.extend({
 
     initialize() {
