@@ -1,9 +1,14 @@
+body > * {
+    border-collapse: collapse;
+}
 .full-page {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    font-family: Arial;
+    font-size: 14px;
 }
 
 .hide {
@@ -27,13 +32,18 @@
     overflow-y: auto;
 }
 
-.rooms .list .item {
+.rooms .list .item, .roomUpdateContainer{
     padding: 8px 4px;
     border-bottom: 1px solid #aaa;
     cursor: pointer;
+    position: relative;
 }
 
-.rooms .list .item.selected {
+.roomUpdateContainer{
+    background-color: orange;
+}
+
+.rooms .list .item.selected{
     background-color: gray;
     color: white;
 }
@@ -45,6 +55,24 @@
 
 .rooms .list .item:last-of-type {
     border-bottom: none;
+}
+
+.rooms .list .item .name {
+    width: 180px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;    
+}
+
+.rooms .list .item .edit, .roomUpdateContainer .cancel {
+    position: absolute;
+    right:4px;
+    top:2px;
+    color:blue;
+    font-size: 10px;
+    height: 12px;
+    min-width: 10px;
+    text-align:center;
 }
 
 .rooms .create {
@@ -91,10 +119,14 @@
     width: 100%;
     height: 100%;
     resize: none;
+    display: flex;
 }
 
 .room .messages .stream {
     height: calc(100% - 100px - 44px);
+/*    display: flex;
+    flex-flow: column;*/
+    overflow-y: auto;
 }
 
 .room .select-room-notice {
@@ -133,29 +165,43 @@
 .message {
     display: flex;
     flex-flow: row nowrap;
-    padding: 10px;
-    border-bottom: 1px solid #aaa;
+    padding: 5px 10px;
+    min-height: 70px;
 }
 
 .message .message-left {
-
+        display: flex;
+        flex-flow:  column;
 }
 
 .message .message-right {
     display: flex;
     flex-flow: column nowrap;
-    justify: stretch;
-    padding-left: 10px;
+    justify-content: baseline;
+    padding: 5px 15px;
+    margin-left: 10px;
+    border-radius: 10px;
+    background-color: #d0fb98ab;
+    max-width: 600px;
+    min-width: 200px;
 }
 
-.message .message-right * {
+.message .message-right > *{
     padding-bottom: 5px;
 }
 
+.message .message-right .user{
+    font-weight: bold;
+    color: darkblue;
+}
+
 .photo {
-    width: 50px;
+    width: 60px;
+    border-radius: 30px;
 }
 
 .timestamp {
     text-align: right;
+    color: darkgreen;
+    font-size: 12px;
 }

@@ -1,5 +1,6 @@
 import Backbone from "backbone";
 import $ from "jquery";
+import moment from "moment";
 
 // TODO: possibly add more functionality to messages like:
 // - edit
@@ -93,7 +94,7 @@ export default Backbone.View.extend({
         var $userName = $("<div class='user'></div>").text(data.val().user.displayName);
         var $text = $("<div class='text'></div>").text(data.val().text);
         // timestamp
-        var $timestamp = $("<div class='timestamp'></div>").text(new Date(data.val().lastModified));
+        var $timestamp = $("<div class='timestamp'></div>").text( moment(new Date(data.val().lastModified)).format("MMM DD YYYY, hh:mm a"));
 
        $rightSide.append($userName);
        $rightSide.append($text);
@@ -102,7 +103,7 @@ export default Backbone.View.extend({
        $newMessage.append($leftSide);
        $newMessage.append($rightSide);
 
-        this.$('.stream').append($newMessage);
+        this.$('.stream').append($newMessage).scrollTop(this.$('.stream').prop("scrollHeight"));
     },
 
     // TODO: handle messages being removed
