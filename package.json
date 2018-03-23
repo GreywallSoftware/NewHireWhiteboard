@@ -26,5 +26,8 @@
   "scripts": {
     "prestart": "npm install",
     "start": "webpack-dev-server --open"
+  },
+  "dependencies": {
+    "moment": "^2.21.0"
   }
 }

@@ -1,5 +1,5 @@
 import Backbone from 'backbone';
-
+import moment from 'moment';
 import '../../css/index.css';
 
 import LoginPopup from './LoginPopup';

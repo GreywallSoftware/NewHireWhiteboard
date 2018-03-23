@@ -39,7 +39,9 @@ export default Backbone.View.extend({
      */
     handleRoomAdded (data) {
         let $newRoom = $(`<div class='item' data-key='${data.key}'></div>`)
-            .append(`<div class='name'>${data.val().name}</div>`);
+            .append(`<div title="${data.val().name}" class='name'>${data.val().name}</div>`)
+            .append(`<div class='edit' data-key='${data.key}'>edit</div>`);
+            
         this.$(".list").append($newRoom);
     },
 
@@ -56,13 +58,17 @@ export default Backbone.View.extend({
      * @param data
      */
     handleRoomChanged (data) {
-        this.$(`.list > .item[data-key='${data.key}']`).text(data.val().name);
+        this.$(`.list > .item[data-key='${data.key}'] > .name` ).text(data.val().name);
+        this.model.trigger('change:selectedRoom', this.model);
     },
 
     // backbone events hash
     events: {
         "click .create": "handleCreateRoomClick",
-        "click .item": "handleItemClick"
+        "click .item": "handleItemClick",
+        "keypress .roomUpdateContainer > input": "handleRoomNameInputKeypress",
+        "click .edit": "updateItemClick",
+        "click .cancel": "showAllItems"
     },
 
     /**
@@ -88,6 +94,9 @@ export default Backbone.View.extend({
         // get the firebase key from the element that was clicked
         let key = event.currentTarget.getAttribute('data-key');
 
+        //reset all the items visibility
+        this.showAllItems(event);
+
         // find the currently selected room (if it exists) and remove the class 'selected'
         this.$('.item.selected').removeClass('selected');
 
@@ -96,5 +105,47 @@ export default Backbone.View.extend({
 
         // set the selectedRoom on the model to the value of the key
         this.model.set('selectedRoom', key);
-    }
+    },
+
+    updateItemClick(event){
+        event.stopPropagation();
+        this.showAllItems(event);
+        let key = event.currentTarget.getAttribute('data-key');
+        let $editItem = this.$(`.list > .item[data-key='${key}']`);
+        let $roomUpdateContainer = this.$(`.roomUpdateContainer`).removeClass('hide');
+        let $roomNameInput = this.$(`.roomUpdateContainer > input`).attr('data-key', key);
+        firebase.database().ref(`rooms/${key}`).once('value').
+            then((data) => {
+            let name = data.val().name;
+            $roomNameInput.val(name);
+            $editItem.addClass('hide');
+            $editItem.after($roomUpdateContainer);
+        });
+    },
+
+    handleRoomNameInputKeypress (event) {
+        //TODO: what if a user actually wants to include a newline in their message
+        // Then we need to use something like shift + enter?
+        if (event.which === 13 || event.keyCode === 13) {
+            this.updateRoomName(event);
+        }
+    }, 
+
+    updateRoomName (event){
+        let $roomNameInput = this.$(`.roomUpdateContainer > input`);
+        let key = event.currentTarget.getAttribute('data-key');
+        if($roomNameInput.val()){
+            firebase.database().ref(`rooms/${key}`).set({
+                name: $roomNameInput.val()
+            });
+        }
+        this.$(`.roomUpdateContainer`).addClass('hide');
+        this.$(`.list > .item[data-key='${key}']`).removeClass('hide');
+    },
+
+    showAllItems(){
+        this.$(`.list > .item`).removeClass('hide');
+        this.$(`.roomUpdateContainer`).addClass('hide')
+    },
+
 })
